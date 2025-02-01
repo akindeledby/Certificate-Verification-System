@@ -11,19 +11,19 @@ export const NavbarRoutes = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const isTeacherPage = pathname?.startsWith("/teacher");
-  const isCoursePage = pathname?.includes("/courses");
-  const isSearchPage = pathname === "/search";
+  const isInstitutePage = pathname?.startsWith("/institute");
+  const isVerifierPage = pathname?.includes("/verifier");
+  const isAdminPage = pathname === "/admin";
 
   return (
     <>
-      {isSearchPage && (
+      {isAdminPage && (
         <div className="hidden md:block">
           <SearchInput />
         </div>
       )}
       <div className="flex gap-x-2 ml-auto">
-        {isTeacherPage || isCoursePage ? (
+        {isInstitutePage || isVerifierPage ? (
           <Link href="/">
             <Button size="sm" variant="ghost">
               <LogOut className="h-4 w-4 mr-2" />
@@ -31,9 +31,9 @@ export const NavbarRoutes = () => {
             </Button>
           </Link>
         ) : (
-          <Link href="/teacher/courses">
+          <Link href="/">
             <Button size="sm" variant="destructive" className="text-white">
-              Go to Teacher Mode
+              Go to Home
             </Button>
           </Link>
         )}

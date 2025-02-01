@@ -1,0 +1,47 @@
+.home button {
+  background-color: var(--icons-color);
+  margin: 3rem 3rem;
+  padding: 0.5rem;
+  display: flex;
+  border: 1px solid var(--icons-color);
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 1rem;
+  transition: all 0.2s ease-in;
+  align-items: center;
+  color: var(--shadow-light-color);
+  gap: 0.5rem;
+}
+
+.home button:hover {
+  background-color: var(--main-bg-color);
+  border: 1px solid var(--icons-color);
+  color: var(--icons-color);
+}
+
+.how_top {
+  background-color: white;
+}
+
+.how_top h4 {
+  text-decoration: underline;
+  font-size: x-large;
+}
+
+.how {
+  width: 99%;
+  margin: 0 auto;
+  gap: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.how_info {
+  border-radius: 0.5rem;
+  color: black;
+  font-size: medium;
+}
+
+.how_image {
+  border-radius: 0.5rem;
+}

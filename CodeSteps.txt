@@ -1,241 +1,39 @@
-lms pass: Mike@4321
-(&apos;) ===> use for skipping an inverted comma, ctrl D ==> to select similar variable name for editing once.
-<></> This is called a fragment.
-Note: The children in the "layout.tsx" are the contents in "page.tsx".
-
-Step 1: Install  nextjs using npx create-next-app@13.4.12 learning-management-system --typescript --tailwind --eslint.
-
-Step 2: Install shadcn-ui package which will help us create a beautiful, featuristic and reusable components and buttons for the user interface (frontend).
-
-Use npx shadcn@latest init. Visit the website page to see how to install different components like buttons, etc.
-
-Step 3: Install clerk package for managing user sign-in/sin-up and authentication. Use npm install @clerk/nextjs.
-
-Step 4: Visit clerk website to do other necessary steps to complete the set-up.
-
-Step 5: Setup/Configure different routing groups in the app folder using parenthesis: ().
-We will create the sign-up and sign-in pages, we will create those in the auth\route group folder inside the app folder/directory. We will then create the [[...signu-up]] folder and page.tsx file inside it, all inside the sign-up folder.
-Similarly, we will also create the [[...signu-in]] folder and page.tsx file inside it, all inside the sign-in folder.
-
-Step 6: Next, we will copy the lines of codes individually from the sign-up and sign-in found on the Clerks website and paste them into individual pages.tsx respectively in the sign-up and sign-in folders.
-
-Step 7: use short cut "sfc" to bringup/autocomplete structure function components from Simple React Snippet and ES7 React/Redux/GraphQl/React Native Snippet from extensions.
-
-Step 8: Should in case something goees wrong with our app folders, settings and config, we can delete the ".next" folder and reload/restart the app to create a new one, or just run "rm -rf .next" in the terminal.
-
-From the layout.tsx file of root app directory, import ClerkProvider from '@clerk/nextjs' and wrap the entire return statement inside the <ClerkProvider></ClerkProvider> element.
-
-Step 9: We will provide a middleware for our code in order to protect the routes to prevent accessing them without users being signed in. We will also do this from Clerk Provider. We will do this by creating a new file - "middleware.ts" in the app root folder/directory.
-
-Step 10: Copy the middleware code from Clerk website and paste it in the newly created middleware.ts file. Any route that need to be unprotected inside the parenthesis e.g publicRoute: ["/test"].
-
-Step 11: We will create the sign-up and sign-in pages, we will create those in the "auth\routes" group folder inside the app folder/directory. We will then create the [[...signu-up]] folder and page.tsx file inside it, all inside the sign-up folder.
-
-Similarly, we will also create the [[...sign-in]] folder and page.tsx file inside it, all inside the sign-in folder.
-
-Step 12: Next, we will copy the lines of codes individually from the sign-up and sign-in found on the Clerks website and paste them into individual pages.tsx respectively in the sign-up and sign-in folders.
-
-Step 13: Next, inside the "-component" folder in the (dashboard) group folder, we will create all the sidebar components consisting of sidebar.tsx, sidebar-routes.tsx and sidebar-item.tsx and put in all the codes.
-
-Step 14: Also, inside the "-component" folder in the (dashboard) group folder, we will create the navbar and mobile-sidebar components and then import the mobile-sidebar component into the navbar component.
-
-Step 15: To make the "Menu" icon we have inside the mobile-sidebar component work, we will install "npx shadcn@latest add sheet". We may also need to force install some module in some cases. 
-After installing, we will wrap the Menu and the sidebar imported into the mobile-sidebar.tsx inside the Sheet, SheetTrigger and SheetContent components. By doing this, the Menu bar becomes responsive on mobile devive.
-We wil also create the NavbarRoutes component inside the component folder created by shadcn-ui. This will help us hold the contents that will apprear at the navbar showing on standard desktop view. 
-Then we will import it into the navbar.tsx. We will also add the UserButton component in the NavbarRoutes to make it visible in the desktop view.
-
-Step 16: Another thing we have to do is that, when we are in the teacher mode, we want to show different things on the sidebar which will be different from that of a student or learner. 
-We will create a teacher folder and courses sub-folders (analytics and courses) with page.tsx inside each of them. 
-And then we will create a route for the teacher in the "/components/ui/navbar-routes" and now go to the sidebae-routes.tsx in dashboard and create an entry for the route created for the teacher.
-
-Step 17: Next, we will go back into the courses and/or analytics subfolders for the teacher folder and put the neccesary code entries..
-
-Step 18: Then add the form and input components for shadcn-ui "npx shadcn@latest add form" and "npx shadcn@latest add input", also install axios with npm install axios. After we will import them into the create course page.
-
-Step 19: in the create course page, we will create the formSchema, formHook and other necessary parameters. We will then create a form inside of the page and pass the props from the form hook created gotten from the zod formSchema into it.
-After setting up the page, we may also install npm install react-hot-toast. This will help us collect display error when generated.
-After installing it, create a new folder "provider" in the "/components" folder. Then create "toast-provider.tsx" inside it and enter all the necessary codes.
-
-Step 20: Next, in the layout.tsx file in the app root folder, add the <Toaster /> component before the {children}. 
-
-Step 21: To set up the api for handling request to submit the form in the server, we will use Prisma library to create the Schema for the database. - npm install -D prisma. 
-After anstalling Prisma, we will initialise it in our project using npx prisma init.
-Next, we will also need to install prisma client - npm install @prisma/client. Then we will go into the schema.prisma file in the prisma folder created when we install Prisma and create the schema.
-After creating the schema, then we run "npx prisma generate" to generate the schema for within the project.
-Meanwhile, to push it our database(either remotely or locally) which we used in the ".env" file, then we will use "npx prisma db push"
-
-Step 22: Next, we would create the api route to create our courses. So we will go to the app root folder and create a new folder "api", and create a folder "courses" in it. Then inside the "courses", create a "route.ts" file.
-Prisma has a way of checking what happens in the Backend and Database. Use "npx prisma studio".
-After the above, restart the app , and then navigate to teacher/create page and try to create a new course. This should return a success or a failure operation. We can go to the network tab of inspect in chrome dev mode to notice what happens,
-also the prisma studio page to see if course is succesfully created or not.
-
-Step 23: We may also create a dynamic folder "[courseId]" in the teacher/course folder which helps to hang unto the course creation operation done in Step 22 from which other setups for the course will be continued. 
-In it, we will create "page.tsx" file and enter all necessary codes in it.
-Next, we will go to "/components" folder and create icon-badge.tsx file which creates an <IconBagde /> component. Import the icon-badge.tsx file into the "page.tsx" file created in [courseId] folder earlier and use the <IconBagde /> components in it.
-
-Step 24: Next, inside the "[courseId]" folder we will create a "_components" folder. Then we will create a "title-form.tsx" file inside it, which wi will import into the [courseId]/page.tsx file to use it inside.
-While/after creating the title-form.tsx, we will create the patch function to allow us submit the form. We will go to the "api/course" folder in the root directory and create another folder "[courseId]" and create "route.tsx" in it.
-Also, inside the "[courseId]/_components" folder, we will also create "description-form.tsx" file and write also similar code as we have it in "title-form.tsx" and import it into the [courseId]/page.tsx file. 
-You must install "npx shadcn@latest add textarea"
-
-Step 25: In order for us to be able to create and upload images/files/videos we will use uploadthing; visit "uploadthing.com" and follow all the necessary steps and save your files appropraitely.
-Now we will create a "file-upload.tsx" in the "/components" folder and enter all necessary codes. 
-We will also create an image-form.tsx file in the "[courseId]/_components" folder in the teacher/courses route folder and write all the necessary codes.
-
-Step 25: Next, we want to create a combobox form for Category selections but we will use another component from shadcn-ui. 
-Visit shadcn-ui website, navigate to component setup section and then to "ComboBox" instatllation. We will need the <popover/> and the <command /> components. npx shedcn@latest add popover, npx shad@latest add command. ComboBox comes as a combination of the two (popover and command).
-Also under the comboBox section in shadcn/ui website, copy the codes. Then create a "combobox.tsx" file in "components/ui" folder and paste them in there. Edit it to suite our needs and then save.
-
-
-Step 26: After creating the "comboBox.tsx" file, the next thing we would do is to create the category form inside the "[courseId]/_components" folder just as we created for Title and Description and edit all neccesary entries where possible. 
-We will also go inside the courses/[courseId]/page.tsx and enter the entries for the categories at the top. 
-After doing that, we  will go out of the "app root" folder and create a "scripts" folder. And inside it, we will create "seed.tx" file and type in all necessary codes.
-After that, we will run "node scripts/seed.ts" in the terminal. Ensure you are connected to the internet and by running this, we will register/create all the categories in our database if it result to success, and we can confirm it through prisma studio.
-Next, in the "[courseId]/page.tsx" file, we will add the entry for the category form with the onees already there.
-
-Step 27: After doing the above, what we will do next is to create the course price form in order to sell the course. Create "page-form.tsx" in the "_component" folder in the courseId folder and write all the necessary codes. 
-Now, Inside the "[courseId]/page.tsx" below the "div" holding the "category" section , we will create another "div" and enter the neccesary codes for the "price-form" we created earlier.
-We will format the price field to a desired currency symbol, so we will go to the "lib" folder and create "format.ts" file and enter the necessary codes.
-
-Step 28: Next is to create the attachments for the course. We will do this by also creating an attachmet form as done previously for other sections. As usually done for previous forms, will create a "attachment.tsx" file in the "/teacher/courses/[courseId]_components" folder.
-We can copy the contents of the "image-form.tsx" into it, since the will have similar contents but we will edit some parts of the contents/codes.
-Also in the "[courseId]/page.tsx", below the "div" holding the "Course Price" section , we will create another "div" and enter the neccesary codes for the "attachment form" we created earlier.
-However, we will create a new route for the "attachment-form" separate from others. To do this, we will go into the "api/courses/[courseId]" folder and create "attachment" form. Inside it create "route.ts" file  and write in all the necessary codes.
-After all above, we will create the attachment id route and the delete route. To do this, we will go to the "api/courses/courseId/attachments" folder and create "[attachmentId]" folder, and inside it, we will create "route.ts" file, 
-this is through which the onDelete() function in the "attachment-form.tsx" will work will work.
-
-
-Step 29: CREATING COURSE CHAPTER: So far so good, we have completed the course page/course Id page with all the title, description, image, category and attachment, now we want to create the course chapter form/page for each courseId. 
-To do this, we will have to go back to prisma schema file, and then setup the model for the the course chapters.
-We will also need to create schema for MuxData, UserProgress, Purchase and StripeCustomer. All are needed to complete the course chapter form. After creating them, we will run "npx prisma generate" and "npx prisma db push" to push to database. 
-Then we will go into "[courseId]/_components" folder and create "chapter-form.tsx" file and type in all the necessary codes. After that, we will add it the "page.tsx" file.
-
-
-Step 30: Next, we will create a route for the chapter-form inside the "api/courses/[courseId]/chapter" folder. After doing everything, we can try to create a course chapter, then we can verify it by running "npx prisma studion" and see the chapter created.
-What we will do next is to create a list inside of the course chapter which we are going to use to reorder our chapters, drag and drop them and also display them. Also, we will create"chapter-list.tsx" files inside "[courseId]/_components" folder.
-Next, we will install a package that will allow us to drag and drop items "npm install @hello-pangea/dnd" also called react beautiful drag and drop. We will also install "npx shadcn@latest add badge". Ensure you shutdown the app first.
-Next, we will import ChapterList component from the "chapter-list.tsx" file we created earlier into "chapter-form.tsx" file and add more configurations/codes.
-
-Step 31: After doing the above, we will create a "reorder" folder in the "api/courses/[courseId]/chapters" and inside the folder, we will create a "route.ts" file. Also, in the chapter folder, create "route.ts" file and put all the necessary codes in it. 
-Then in the chapter-form create "onReorder" function, this will ensure our drag and drop works without an error.
-
-Step 32: The next thing to do is to make the "edit/pencil" icon clickable/work so as to allow us edit any chapter we click on. To do this, we will create an "onEdit" function in "chapter-form.tsx" file which will handle that task. The "onEdit" function will route to 
-"router.push(`/teacher/courses/${courseId}/chapters/${id}`)". This is used to navigate to the page specified.
-
-Step 33: Now, we want to make the "pencil/Edit Title" icon to be functional so that we can edit/update the chapter title. So we will create "chapter-title-form.tsx" file, inside "courses/[courseId]/chapters/[chapterId]". Then copy the codes in "chapter-title.tsx" into it and edit as required. 
-This will also make us to setup where the chapter created will be stored/submitted to. So will create/modify the axios.patch "" in the "onSubmit" function. After that we will create "chapter/[chapterId]" in "api/courses/[courseId]" and "route.ts" file in the "[chapterId]" folder. 
-We may also  need to update/edit our description just as we did for the chapter-title-form earlier, so we will install "npm install react-quill". Then we navigate to our global "/components" folder and create "editor.tsx" file in it. 
-We will also create an equivalent component called "Preview" in global "/components" folder.
-Next, in the "api/courses/[courseId]/chapter" folder, we will create "chapter-description-form" file and copy the contents of the "description-form" file inside it and edit the contents as expected. After editing it, go to page.tsx within it's folder and add it up just below "ChapterTitleForm" entry.
-
-Step 34: Next, We want to create an access settings to control/manage whether the course is available for free, preview or not. To do this, we will create "chapter-access-form.tsx" inside the "/teacher/courses/[courseId]/chapter/[chapterId]_components" folder, copy the code from "chapter-description-form.tsx" into it and modify it as expected.
-Next, we will istall a checkbox module from shadcn-ui "npx shadcn@latest add checkbox"
-While still inside the "page.tsx" inside of "courses/[courseId]/chapter/[chapterId]", and as usual, we will create a <div> below and add the ChapterAccessForm component from "chapter-access-form.tsx" file we created earlier.
-
-Step 35: Now, we will create the section to uplaod the video. We will go to "page.tsx" inside of "courses/[courseId]/chapter/[chapterId]" and below we will add the box/section which will work similarly to form for the video upload. Doing this, we will need to have a mux account to get the necessary KEYS and api.
-To do this, in "courses/[courseId]/chapter/[chapterId]", we will create "chapter-video-form.tsx" file and copy the contents of "image-from.tsx" in "courses/[courseId]/_components" folder, and then modify the codes as appropraite. Now, go to page.tsx and add the video i.e chapter-video-form.tsx component to it.
-Next, in the ".env" file, create the entries for the MUX_TOKEN_ID and MUX_TOKEN_SECRET. Then go to Mux website, www.mux.com/for/node and set up all things necessary. We will also install "npm install @mux/mux-node" and "npm install @mux/mux-player-react".
-
-Step 36: Next, we will go to the api route "api/courses/[courseId]/chapters/[chapterId]/route.ts" and import mux at the top, then now before the "return" keyword, type in the entries and values to enable video upload onto Mux. 
-Next, we will go to "chapter-video-form.tsx" and import "MuxPlayer" from @mux/mux-player-react,
-so as to allow the video preview image to show on the video section in "page.tsx" file/page. Then you can try and upload a video and see if it can be uploaded.
-
-Step 37: What we will do next is to create a little/small label at the top of the courses for the student to see if the course is published or not. So we will go to global "/components" folder and create "banner.tsx". After creating it, we will go to "page.tsx" which renders the chapter at "courses/[courseId]/chapter/[chapterId]" 
-and put it right at the top in the return statement section, all included in a fragment <></>. After doing the above, we will add another variable "isComplete" which helps to check and return "true" if all the entries/sections to complete course setup are done/finalised, i.e every item in the "requiredField" array are marked completed. 
-Also, we will create another component "ChapterAction" imported from "courses/[courseId]/chapter/[chapterId]/_components" into the page.tsx. This will help in ascertaining that the course setup is completed. We will also install "npx shadcn@latest add alert-dialog". Next, go to global "/components" folder and add a new folder "modal".
-Add "confirm-modal.tsx" inside the "modal" folder and enter all necessary codes. We will use the alert dialog library and confirm-modal.tsx to create our own reusable model. 
-Next, we will go inside of the "chapter-action.tsx" file and wrap the <Button> component holding the <Trash /> fragment inside <ConfirmModal></ConfirmModal> component. Also, in "chapter-action.tsx", we will create an "onDelete" function which we can use to delete any chapter and insert it in to "onConfirm" Button. 
-Also, we will go into "api/courses/[courseId]/chapters/[chapterId]/route.ts" and add the api request to delete the chapter from database as well as the muxData from Mux.
-
-Step 38: What we will do next is to create a small button/toggle at the top as well as the api route for it which we will use so as to publish the chapters. So we will go into the "chapter-action.tsx" in "courses/[courseId]/chapter/[chapterId]/_components" folder, and create "onClick" function. 
-Next, we will create the api route which will make the "publish" button to be functional when pressed. So we will create a "publish" folder inside "api/courses/[courseId]/chapters/[chapterId]" and create "route.ts" file inside.
-Note that, the "publish/unpublish" button at the top of the chapter page can toggle, so we 
-
-Step 39: Similarly, we will also create a button at the top-right of the course-setup page which can be pressed to publish and unpublish a course just as we did for chapters. We create "course-action.tsx" in the "teacher/courses/[courseId]/_components" folder and then will copy the contents of the "chapter-action.tsx" file and paste them in it.
-Then we will modify the contents as expected. We will also add "banner" at the top, so as to signal if the course is published or not. Go into the "page.tsx" in the "teacher/courses/[courseId]/_components" and insert the banner right at the top, immediately after the return function.
-
-Step 40: The next we want to do is to enable the "Trash" icon on the "Course Setup" page to be functional so as to allow us delete or trash a course. So we will go to the "route.ts" in "api/courses/[courseId]" and insert a "DELETE" request into it. Also while creating the "DELETE" request, 
-we also need to check if the course already has assets such a muxAsset(video) so that we can also delete it from Mux.
-We also need to enable the "Publish/Unpublish" button to make it functional. Now, go to "api/courses/[courseId]/chapters" and create "Publish" folder, and create "route.ts" in it, and put all the neccesary codes and logic in it. In this similar way, in the same folder/directory, we will also create "unpublish" folder and create "route.ts" in it.
-You can test everything using the "publish/unpublish" buttons both for course and chapter pages to see if it works, but must ensure at least a chapter is published before a course is published.
-
-
-Step 41: Now, wew can customize our app to give a nice confetti = to do this, we will install two packages, "npm install zustand" and "npm install react-confetti". Now, in the root directory, create a folder called "hooks" and create "use-confetti-store.ts" in it. Then write the neccesary codes. 
-Next, go to root component folder and in "provider" folder and create "confetti-provider.tsx" and write the neccesary codes in it. Next, we are going to import the "confetti-provider" into our "app/layout.tsx" file at the top of "toast-provider".
-Then we will go to "course-action.tsx" and import "useConfettiStore", then in the "onClick()" function, write const confetti = useConfettiStore, add just below the "toast.success"
-
-AT THIS POINT, WE HAVE COMPLETED THE COURSEID AND CHAPTER PAGE SETUP.
-The next thing we want to do is to go back to the course setup page "teacher/courses/page.tsx" and add more items to the page. We can addshow a table which will hold all the courses created with their prices and status (either Published or Draft).
-
-Step 42: That we will do next is to install and setup the Data Table. So we will install "npx shadcn@latest add table", then we will install the dpendency "npm install @tanstack/react-table". 
-Next, create "_components" folder in "teacher/courses", create a "column.tsx" and "data-table.tsx" files inside the "_components" folder.
-Then copy codes in "column.tsx and data-table.tsx" in shadcn-ui website and paste them each in corresponding files you created earlier and modify as needed. Also, go to "teacher/course/page.tsx" and modify the codes in it by adding <DataTable> component.
-So as to get the pagination features, in the "data-table.tsx" we will import getPaginationRowModel from "@tanstack/react-table", and add "getPaginationRowModel: getPaginationRowModel()". 
-We can also sort the columns either in ascending or descending order.
-
-Step 43: The next thing we would do is to create another third column, which will contain button for each course that we can click to edit a speciific course. 
-To do this, we may install "npx shadcn@latest add dropdown-menu" and add the logic in the "column.tsx", simply just creating a <Button> component with a <Link> and the pencil icon in another section below called "id: actions". 
-We may also add search/searching/filtering functionality/features to our table. Go to shadcn-ui website, copy and paste the neccesary feature/library neccesary into the "table-data.tsx"
-
-NOW WE HAVE COMPLETED THE "teacher/courses/page.tsx" AS DESCRIBED IN STEPS 42 AND 43 ABOVE. 
-WE WILL NOW CREATE THE STUDENTS PAGE WHERE THEY CAN BROWSE/SEARCH FOR COURSES AND PURCHASE THEM
-Step 44: to do this, we will install "npm install query-string" and "npm install react-icons". 
-
-Step 45: Next, inside "route/search" folder, we will create folder "_components" and then create "categories.tsx" inside the "_components" folder. Create the interface for the props and configure other parameters as required.
-Next, import "<Categories>" from "categories.tsx" into "route/search/page.tsx". Also, we will create "categoryItem.tsx" in the same folder and export it into "categories.tsx". We will write all the codes neccesary in both files "categories.tsx" and "categoryItem.tsx".
-Next, we will create a search bar at the top of the search bar so that users/students can search for category of choice. To do this, we will go to "/components/navbar-routes.tsx" and add the search features "const isSearchPage = pathname".
-Then put a fragment after the return statement. Now, create "search-input.tsx" file in the same folder and export into the "navbar-route.tsx".
-
-step 46: We will now create a hook called "use-debound.ts" in the "/hooks" folder. We will use "useState()" and "useEffect()" in it and write all other neccesary codes. The "use-debounce" will help us in our search/filter created in the navbar.
-The function of the debounce is to help prevent the database from being exausted of too much of queries or keys strokes from users. We want to delay or debounce it. It is only when the user finish typing or delay it for some few seconds before the search is carried out.
-Now, go back to "search-input.tsx" and add the neccesary codes. We will also write in the functionality of the debounce as it will be imported into "search-input.tsx". 
-Next we need to make it visible on small/mobile devicego, so will will go to "search/page" and add the <SearchInput> component in it.
-
-Step 47: The next to do is to make the search/filter bar functional, so as to respond to user's search. This feature can also be combined alongside the student purchasing the course and also tracking the user's progress, after purchasing. 
-To do this, we will use the information inside the "schema.prisma" file. So, while the courses is searched for and displayed for the user, it will display along with the price and when the user purchase it, it displays the user progress, not the price anymore.  
-Go to the root directory, and create new folder "actions", in it create two files in it, "get-progress.ts" and "get-courses.ts". In the "get-progress.ts", write in the neccesary codes. After writing the "get-progress.ts", we will use it inside the "get-courses.tsx".
-
-
-Step 48: After completing the step 47 above, we will go back to "dashboard/(route)/search/page.tsx" and add the interface <SearchPageProps> and "const courses = await getCourse..." . Then, go to the global "components" folder and create "courses-list.tsx" and 
-export <CourseList> to "page.tsx" and then add it to the component structure in return statement. 
-
-Step 49: We will now need to design the cards <CourseCard> for each course which will display the thumbnail, price and other neccesary information about each course. The <CourseCard> component will replace the <div key={item.id}>{item.title}</div> earlier in the 
-"courses-list.tsx" and put all the neccesary data passed in the CourseCard. To create the <CourseCard>, we will go to the global "components" folder and create "course-card.tsx", and enter all the neccesary codes in it. As we create the CourseCard. We will see/appear on the browse page, which students can see.
-
-Step 50: Next stage is to set up the page, so that when a students click on a specific course, they are redirected to the the course, where they can pay and take their course. So we will create a separate route for "/courses/{id}". 
-So we have to break out from the directory we are working on which contains the "Navbar" and "Sidebar", and create folders. That is, we will create folders in the following structure "app/(course)/course/[courseId]".
-Then inside "[courseId]" folder, we will create "page.tsx" and "layout.tsx". In the layout.tsx, we will extract the children as a ReactNode and the fetch the course which we are trying to load. Then we will go to the "[courseId]" folder and create "_components" folder.
-And inside the folder, we will create files "course-sidebar.tsx" and "course-sidebar-item.tsx". Write the codes in them. Import "course-sidebar-item.tsx" into "course-sidebar" and then import "course-sidebar" inside "layout.tsx".
-
-Step 51: Now as it is, the sidebar is not visible in mobile mode/devices. The next thing we want to do is to make it to be visible in mobile mode/devices. We will go to "/app/(course)/courses/[courseId]/layout.tsx", and create a new <div> at the top just after the "return" statement. 
-Then in the <div> you should add <CouresNavbar> imported from "course-navbar.tsx" file which we will create in "/app/(course)/courses/[courseId]/_components". Next, we will also import <NavbarRoute> from "components/navbar-route" which we created earlier into "course-navbar.tsx" so that it will appear the same way as when we in Teacher Mode.
-Now, we will create the <CourseMobileSidebar> component in the "(course)/courses/[courseId]/_components" and import it into "course-navbar.tsx".
-
-Step 52: Now, go to "(course)/courses/[courseId]/" and create "chapters" folder, and then inside it create "[chapterId]" folder. Now, inside the [chapterId] folder, create "page.tsx" file.  
-Note that, we can reset our database with prisma incase if something went wrong. Note that we can only do this in development and not during production whhen your users are already on. First we need to stop the server, then We will run the command "npx prisma migrate reset". By doing this, all the fields and data in the database will be deleted.
-After that, then we will run "npx prisma db push", then we will seed the database again with "node script/seed.ts", so that all the categories are generated. 
-
-Step 53: The next to do is to design the video/chapter content or the course contents which the user/student will watch, as well as the enroll button, so they can finally purchase the course. But we should be able to redirect the user to the first introduction or free preview when the user click on the course from the courses pages.
-To do this, we will go to the page.tsx of "(course)/courses/[courseId]" and write in the neccesary codes. Also, we will go to the "page.tsx" of "(course)/courses/[courseId]/chapters/[chapterId]", and also enter the neccesary codes in it.
-Now, to fetch the chapter contents, create "get-chapters.tsx" file in "/actions/" in the root directory, and create the code logic in it. After that, then import it into "(course)/courses/[courseId]/chapters/[chapterId]/page.tsx" and complete the code logic. 
-In the same "page.tsx", we will create a <VideoPlayer /> component, which will help us display the video frame itself with all the neccesary parameters that will be required.
-
-
-Step 54: To create the <VideoPlayer /> component, go to "(course)/courses/[courseId]/chapters/[chapterId]" and create "_components" folder, and inside, create "video-player.tsx" which will hold the <VideoPlayer /> component. 
-After completing the <VideoPlayer /> component and importing it into "(course)/courses/[courseId]/chapters/[chapterId]/page.tsx", the next thing we will do is to add the enroll button, the title, attachments and also the logic/features to allow the next chapter loads after the video being played is completed. 
-
-Step 55: To add the enroll button, we will create "course-enroll-button.tsx" file in the "(course)/courses/[courseId]/chapters/[chapterId]/_component" and then import it into "(course)/courses/[courseId]/chapters/[chapterId]/page.tsx". We will also need to install "npx shadcn@latest add separator". Restart the app after installing.
-Then, "(course)/courses/[courseId]/chapters/[chapterId]/page.tsx", add/import the separator component. This will help us create different separator sections wherever we put in in the code.
-
-Step 56: The next step is to configure the "enroll" button to initiate a payment, and we would use the stripe payment platform for this functionality.
-Visit Stripe website: "www.stripe.com" to create Stripe account and we would get API key from our dashboard. We can also use other payment platforms like "Paystack". Visit www.paystack.com, and create an account.
-Now, copy the public key into the ".env" file and save. Next we will install the "paystack" library: npm install react-paystack. 
-
-
-
-
-
-
-
-  "http.proxySupport": "fallback
-  "http.proxyAuthorization": null
+Mission: To create and organize training courses, conduct research and create knowledge through education programs, professional fora and workshops.
+
+Vision:  To be an International Centre of Excellence, a Leading Provider and an Internationally recognized Professional Body in Emergency, Crisis, Disaster, Safety, Environmental and Risk Management 
+
+Values: Professionalism, Excellence, 
+Integrity and 
+Passion
+
+✔ Your Prisma schema was created at prisma/schema.prisma
+  You can now open it in your favorite editor.
+
+warn Prisma would have added DATABASE_URL but it already exists in .env
+warn You already have a .gitignore file. Don't forget to add `.env` in it to not commit any private information.
+
+Next steps:
+1. Set the DATABASE_URL in the .env file to point to your existing database. If your database has no tables yet, read https://pris.ly/d/getting-started
+2. Set the provider of the datasource block in schema.prisma to match 
+your database: postgresql, mysql, sqlite, sqlserver, mongodb or cockroachdb.
+3. Run prisma db pull to turn your database schema into a Prisma schema.
+4. Run prisma generate to generate the Prisma Client. You can then start querying your database.
+5. Tip: Explore how you can extend the ORM with scalable connection pooling, global caching, and real-time database events. Read: https://pris.ly/cli/beyond-orm
+
+More information in our documentation:
+https://pris.ly/d/getting-started
+
+1. Create all neccesary components(Navbar, Sidebar, Sections of the HomePage, and so on) and pages,
+2. Install Clerk and set up Sign-In, Sign-Up, middleware as well as the .env.local file. Also add the database URL and clerk webhook secret.
+3. Install/initialize Shadcn ui, and add all neccesary UIs,
+4. Visit MongoDB and set-up a cluster and a database. Then install mongodb driver and mongoose and create a template table,
+5. Visit ngrok wesite, create an account and set up domain which we will use to connect webhooks to sync Clerk data with MongoDB
+6. Also download ngrok to the local system pr install it inro the application using "npm install -g ngrok".
+7. Use the domain in the clerk dash board and complete the setup, also update the .env.local file.
+8. Next install svix: npm i svix to verify the signature of the webhook coming in.
+9. Now, we will create a folder and a route.js in it which will contain the handler for our requests coming from ngrok and clerk into our database.
+10. Then we will install prisma and prisma client, run "npx prisma init".
+11. Next, we create a Prisma schema for the users. Then run "npx prisma generate" to initialize it.
+12. After the above, we will create a lib folder in the root directory then create a "db.ts" in it. 
+13. Next after creating the "db.ts" file as above, we will start the application "npm run dev".
+14. We will also start or run the ngrok so as to activate and point the domain we created earlier to our local host

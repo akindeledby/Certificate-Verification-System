@@ -1,5 +1,5 @@
 {
-  "name": "lms",
+  "name": "Certificate Verification System",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.1.2",
+    "@clerk/nextjs": "^5.7.5",
     "@hello-pangea/dnd": "^17.0.0",
     "@hookform/resolvers": "^3.9.0",
     "@mux/mux-node": "^8.8.0",
@@ -48,6 +48,7 @@
     "react-icons": "^5.3.0",
     "react-paystack": "^6.0.0",
     "react-quill": "^2.0.0",
+    "svix": "^1.45.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "3.4.3",
     "tailwindcss-animate": "^1.0.7",
