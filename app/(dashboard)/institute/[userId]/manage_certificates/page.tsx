@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useCallback } from "react";
 
-// Define the Certificate type
 interface Certificate {
   candidateName: string;
   certificateId: string;
@@ -22,29 +21,25 @@ export default function ViewCertificates() {
 
   const certificatesPerPage = 10;
 
-  // Fetch wallet address on mount
   useEffect(() => {
     const storedWallet = localStorage.getItem("walletAddress")?.toLowerCase();
-    setWalletAddress(storedWallet || null);
+    if (storedWallet) {
+      setWalletAddress(storedWallet);
+    }
   }, []);
 
-  // Fetch Certificates from API with pagination
   const fetchCertificates = useCallback(
     async (page: number) => {
       if (!walletAddress) return;
 
       setLoading(true);
       setError("");
-
       try {
         const response = await fetch(
           `/api/getCertificatesPerUser?walletAddress=${walletAddress}&page=${page}&limit=${certificatesPerPage}`
         );
         const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch certificates");
-        }
+        if (!response.ok) throw new Error("Failed to fetch certificates");
 
         setCertificates(data.certificates);
         setTotalPages(data.pagination.totalPages);
@@ -56,26 +51,24 @@ export default function ViewCertificates() {
       }
     },
     [walletAddress]
-  ); // ✅ Added walletAddress as a dependency
+  );
 
-  // Handle Status Toggle
+  useEffect(() => {
+    fetchCertificates(currentPage);
+  }, [fetchCertificates, currentPage]);
+
   const toggleStatus = async (certificateId: string, currentStatus: string) => {
     const newStatus = currentStatus === "ISSUED" ? "REVOKED" : "ISSUED";
     setLoadingCertId(certificateId);
-
     try {
       const response = await fetch("/api/updateCertificateStatus", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ certificateId, newStatus }),
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to update status");
-      }
-
-      setCertificates((prevCertificates) =>
-        prevCertificates.map((cert) =>
+      if (!response.ok) throw new Error("Failed to update status");
+      setCertificates((prev) =>
+        prev.map((cert) =>
           cert.certificateId === certificateId
             ? { ...cert, status: newStatus }
             : cert
@@ -87,13 +80,6 @@ export default function ViewCertificates() {
       setLoadingCertId(null);
     }
   };
-
-  // Fetch certificates when the page changes
-  useEffect(() => {
-    if (walletAddress) {
-      fetchCertificates(currentPage);
-    }
-  }, [fetchCertificates, currentPage]); // ✅ `fetchCertificates` is now inside the dependency array
 
   return (
     <div className="p-6">
@@ -162,7 +148,6 @@ export default function ViewCertificates() {
           </table>
         </div>
       )}
-      {/* Pagination Controls */}
       <div className="flex justify-between items-center mt-4">
         <button
           disabled={currentPage === 1}
