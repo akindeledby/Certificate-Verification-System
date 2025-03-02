@@ -82,33 +82,35 @@ const UploadCertificate = () => {
     }
   };
 
-  // const storeOnBlockchain = async (
-  //   certificateId: string,
-  //   ipfsHash: string,
-  //   candidateName: string
-  // ) => {
-  //   if (!window.ethereum) {
-  //     throw new Error("MetaMask is not installed");
-  //   }
+  const storeOnBlockchain = async (
+    certificateId: string,
+    ipfsHash: string,
+    candidateName: string
+  ) => {
+    if (!window.ethereum) {
+      throw new Error("MetaMask is not installed");
+    }
 
-  //   try {
-  //     const provider = new ethers.providers.Web3Provider(window.ethereum);
-  //     const signer = provider.getSigner();
-  //     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 
-  //     const tx = await contract.uploadCertificate(
-  //       certificateId,
-  //       ipfsHash,
-  //       candidateName
-  //     );
-  //     await tx.wait();
+      const tx = await contract.uploadCertificate(
+        certificateId,
+        ipfsHash,
+        candidateName
+      );
+      await tx.wait();
 
-  //     return true;
-  //   } catch (err) {
-  //     console.error("Blockchain Transaction Error:", err);
-  //     throw new Error("Failed to store certificate on blockchain - Ensure certificate Id is not already stored in database");
-  //   }
-  // };
+      return true;
+    } catch (err) {
+      console.error("Blockchain Transaction Error:", err);
+      throw new Error(
+        "Failed to store certificate on blockchain - Ensure certificate Id is not already stored in database"
+      );
+    }
+  };
 
   const saveToDatabase = async (
     certificateId: string,
@@ -199,7 +201,7 @@ const UploadCertificate = () => {
       const ipfsHash = await uploadToIPFS(file);
       setIpfsHash(ipfsHash);
 
-      //await storeOnBlockchain(certificateId, ipfsHash, candidateName);
+      await storeOnBlockchain(certificateId, ipfsHash, candidateName);
       await saveToDatabase(
         certificateId,
         ipfsHash,

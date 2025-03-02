@@ -935,53 +935,6 @@ const CertificateManager = () => {
     }
   };
 
-  const handleSubmitGenerateCertificate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!walletAddress) {
-      setError("Please connect your wallet first.");
-      return;
-    }
-    if (!file) {
-      setError("Please select a file.");
-      return;
-    }
-    if (!candidateName) {
-      setError("Please enter candidate name.");
-      return;
-    }
-    if (!certificateId) {
-      setError("Please enter certificate ID.");
-      return;
-    }
-
-    setLoading(true);
-    setError("");
-
-    try {
-      const ipfsHash = await uploadToIPFS(file);
-      setIpfsHash(ipfsHash);
-
-      await storeOnBlockchain(certificateId, ipfsHash, candidateName);
-      await saveToDatabase(
-        certificateId,
-        ipfsHash,
-        candidateName,
-        walletAddress,
-        organization
-      );
-
-      generatePDF();
-
-      alert("Certificate Uploaded on Blockchain and Database Successfully!");
-
-      resetForm();
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
