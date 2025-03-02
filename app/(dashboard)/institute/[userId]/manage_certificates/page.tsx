@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 // Define the Certificate type
 interface Certificate {
@@ -18,35 +18,45 @@ export default function ViewCertificates() {
   const [totalPages, setTotalPages] = useState(1);
   const [filterStatus, setFilterStatus] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   const certificatesPerPage = 10;
-  const walletAddress = localStorage.getItem("walletAddress")?.toLowerCase();
+
+  // Fetch wallet address on mount
+  useEffect(() => {
+    const storedWallet = localStorage.getItem("walletAddress")?.toLowerCase();
+    setWalletAddress(storedWallet || null);
+  }, []);
 
   // Fetch Certificates from API with pagination
-  const fetchCertificates = async (page: number) => {
-    if (!walletAddress) return;
-    setLoading(true);
-    setError("");
+  const fetchCertificates = useCallback(
+    async (page: number) => {
+      if (!walletAddress) return;
 
-    try {
-      const response = await fetch(
-        `/api/getCertificatesPerUser?walletAddress=${walletAddress}&page=${page}&limit=${certificatesPerPage}`
-      );
-      const data = await response.json();
+      setLoading(true);
+      setError("");
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch certificates");
+      try {
+        const response = await fetch(
+          `/api/getCertificatesPerUser?walletAddress=${walletAddress}&page=${page}&limit=${certificatesPerPage}`
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch certificates");
+        }
+
+        setCertificates(data.certificates);
+        setTotalPages(data.pagination.totalPages);
+      } catch (err) {
+        console.error("Error fetching certificates:", err);
+        setError("Could not load certificates.");
+      } finally {
+        setLoading(false);
       }
-
-      setCertificates(data.certificates);
-      setTotalPages(data.pagination.totalPages);
-    } catch (err) {
-      console.error("Error fetching certificates:", err);
-      setError("Could not load certificates.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [walletAddress]
+  ); // ✅ Added walletAddress as a dependency
 
   // Handle Status Toggle
   const toggleStatus = async (certificateId: string, currentStatus: string) => {
@@ -80,8 +90,10 @@ export default function ViewCertificates() {
 
   // Fetch certificates when the page changes
   useEffect(() => {
-    fetchCertificates(currentPage);
-  }, [currentPage]);
+    if (walletAddress) {
+      fetchCertificates(currentPage);
+    }
+  }, [fetchCertificates, currentPage]); // ✅ `fetchCertificates` is now inside the dependency array
 
   return (
     <div className="p-6">

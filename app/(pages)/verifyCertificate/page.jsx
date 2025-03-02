@@ -2,23 +2,17 @@
 import React, { useState } from "react";
 import Search from "../../components/Search";
 import Style from "../../styles/verifyCertificate.module.css";
-//import { Button } from "../../components/ui/button";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
-import { GrCurrency } from "react-icons/gr";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { FiLock } from "react-icons/fi";
 import Image from "next/image";
 import Link from "next/link";
 
-const verifyCertificate = () => {
+const VerifyCertificate = () => {
   const [search, setSearch] = useState(false);
 
   const openSearch = () => {
-    if (!search) {
-      setSearch(true);
-    } else {
-      setSearch(false);
-    }
+    setSearch((prev) => !prev);
   };
 
   return (
@@ -38,25 +32,26 @@ const verifyCertificate = () => {
           </button>
         </div>
       </div>
+
       <div className={Style.verify}>
         <div className={Style.steps}>
           <h3>Steps to follow to search or verify a certificate:</h3>
-          <p>1. Click on the "Make Payment" button</p>
+          <p>1. Click on the &quot;Make Payment&quot; button.</p>
           <p>
-            2. Enter your card details and click on "Submit" and wait some
-            seconds for the process to complete
+            2. Enter your card details and click on &quot;Submit&quot; and wait
+            some seconds for the process to complete.
           </p>
           <p>
             3. After the payment is completed and confirmed, the search feature
-            will now be available
+            will now be available.
           </p>
           <p>
-            4. Now, click on the Search/Verify Certificate and then enter the
-            Certificate or Credential ID in the search bar
+            4. Now, click on the &quot;Search/Verify Certificate&quot; and then
+            enter the Certificate or Credential ID in the search bar.
           </p>
           <p>
-            5. Finally, click on "Search Icon" and wait while the system search
-            and return result
+            5. Finally, click on the &quot;Search Icon&quot; and wait while the
+            system searches and returns the result.
           </p>
         </div>
         <div>
@@ -68,8 +63,9 @@ const verifyCertificate = () => {
           />
         </div>
       </div>
+
       <div className={Style.search_box}>
-        <div className={Style.search_button} onClick={() => openSearch()}>
+        <div className={Style.search_button} onClick={openSearch}>
           <FiLock />
           <span>Search/Verify Certificate</span>{" "}
           {search ? <FaAngleDown /> : <FaAngleUp />}
@@ -86,4 +82,5 @@ const verifyCertificate = () => {
     </div>
   );
 };
-export default verifyCertificate;
+
+export default VerifyCertificate;
