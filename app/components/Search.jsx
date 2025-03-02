@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Style from "../styles/HomePage.module.css";
 import { AiOutlineSearch } from "react-icons/ai";
 

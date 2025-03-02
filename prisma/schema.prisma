@@ -9,11 +9,151 @@ datasource db {
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  email String @unique
-  firstName String?
-  lastName String?
-  clerkUserId String @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  email            String?  @unique
+  firstName        String?
+  lastName         String?
+  imageUrl         String?
+  walletAddress    String?  @unique @db.String // Wallet address for Web3 interactions
+  role             Role?
+  organization     String?
+  phoneNumber      String? 
+  clerkUserId      String   @unique
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  isEnabled        Boolean  @default(true)
+
+  issuedCertificates Certificate[] // Certificates issued by the user
+  savedCertificates  SavedCertificate[]  
 }
+
+enum Role {
+  ADMIN
+  INSTITUTE
+  VERIFIER
+  GUEST
+}
+
+model Certificate {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  certificateId String   @unique @db.String
+  candidateName String
+  ipfsHash      String   @db.String // IPFS hash for certificate storage
+  issuedBy      String   @db.String // Wallet address of the issuer
+  organization  String 
+  status        CertStatus @default(ISSUED) 
+  createdAt     DateTime @default(now())
+
+  issuer        User? @relation(fields: [issuedBy], references: [walletAddress], onDelete: Cascade) // Relation to User issuing the certificate
+
+  savedByUsers  SavedCertificate[]
+}
+
+enum CertStatus {
+  ISSUED
+  VERIFIED
+  REVOKED
+}
+
+model SavedCertificate {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  walletAddress    String   @db.String
+  certificateId    String   @db.String
+  candidateName    String   @db.String // Store candidate name when saving certificate
+  ipfsHash         String   @db.String // IPFS hash stored along with saved certificate
+  certificateStatus CertStatus @default(ISSUED) // Store certificate status when saving
+  savedAt          DateTime @default(now())
+
+  user           User?       @relation(fields: [walletAddress], references: [walletAddress], onDelete: Cascade)
+  certificate    Certificate @relation(fields: [certificateId], references: [certificateId], onDelete: Cascade)
+
+  @@index([walletAddress])
+  @@index([certificateId])
+}
+
+
+ // =============================================================================
+//  generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "mongodb"
+//   url      = env("DATABASE_URL")
+//   relationMode = "prisma"
+// }
+
+// model User {
+//   id               String   @id @default(auto()) @map("_id") @db.ObjectId
+//   email            String?  @unique
+//   firstName        String?
+//   lastName         String?
+//   imageUrl            String?
+//   walletAddress    String?  @unique @db.String // Wallet address for Web3 interactions
+//   role             Role?
+//   organization     String?
+//   phoneNumber         String? 
+//   clerkUserId      String   @unique
+//   createdAt        DateTime @default(now())
+//   updatedAt        DateTime @updatedAt
+//   isEnabled        Boolean  @default(true)
+
+//   issuedCertificates Certificate[] // Certificates issued by the user
+//   savedCertificates  SavedCertificate[]  
+// }
+
+// enum Role {
+//   ADMIN
+//   INSTITUTE
+//   VERIFIER
+//   GUEST
+// }
+
+// model Certificate {
+//   id            String   @id @default(auto()) @map("_id") @db.ObjectId
+//   certificateId String   @unique @db.String
+//   candidateName String
+//   ipfsHash      String
+//   issuedBy      String   @db.String // Wallet address of the issuer
+//   organization  String 
+//   status        CertStatus @default(ISSUED) 
+//   createdAt     DateTime @default(now())
+
+//   issuer        User? @relation(fields: [issuedBy], references: [walletAddress], onDelete: Cascade) // Relation to User issuing the certificate
+
+//   savedByUsers  SavedCertificate[]
+// }
+
+// enum CertStatus {
+//   ISSUED
+//   VERIFIED
+//   REVOKED
+// }
+
+// model SavedCertificate {
+//   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+//   walletAddress  String   @db.String
+//   certificateId  String   @db.String
+//   savedAt        DateTime @default(now())
+
+//   user           User?       @relation(fields: [walletAddress], references: [walletAddress], onDelete: Cascade)
+//   certificate    Certificate @relation(fields: [certificateId], references: [certificateId], onDelete: Cascade)
+
+//   @@index([walletAddress])
+//   @@index([certificateId])
+// }
+
+
+
+// model SavedCertificate {
+//   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+//   userId         String   @db.ObjectId
+//   certificateId  String   @db.String
+//   savedAt        DateTime @default(now())
+
+//   user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   certificate    Certificate @relation(fields: [certificateId], references: [certificateId], onDelete: Cascade)
+
+//   @@index([userId])
+//   @@index([certificateId])
+// }

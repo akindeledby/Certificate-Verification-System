@@ -1,14 +1,17 @@
 import React from "react";
 
-import NavBar from "./components/NavBar";
 import Intro from "./components/Intro";
 import Steps from "./components/Steps";
 import About from "./components/About";
 import Footer from "./components/Footer";
+import NavBar from "./components/NavBar";
+
+import { getUserId } from "../lib/auth";
 
 type Props = {};
 
-const page = (props: Props) => {
+export default async function page(props: Props) {
+  const userId = await getUserId();
   return (
     <div>
       <NavBar />
@@ -18,6 +21,4 @@ const page = (props: Props) => {
       <Footer />
     </div>
   );
-};
-
-export default page;
+}
