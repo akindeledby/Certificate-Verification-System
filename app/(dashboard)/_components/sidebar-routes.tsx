@@ -30,7 +30,7 @@ const roleSpecificRoutes = {
       label: "Dashboard Overview",
       href: `/admin/${userId}/dashboard`,
     },
-    { icon: Server, label: "Onboarding", href: `/admin/${userId}/onboarding` },
+    // { icon: Server, label: "Onboarding", href: `/admin/${userId}/onboarding` },
     {
       icon: CloudUpload,
       label: "Upload Certificate",
