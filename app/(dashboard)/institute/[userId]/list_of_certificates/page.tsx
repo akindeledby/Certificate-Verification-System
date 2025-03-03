@@ -1,4 +1,3 @@
-// ==============================================================================
 "use client";
 
 import { useEffect, useState } from "react";
@@ -13,9 +12,9 @@ type Certificate = {
 };
 
 export default function ViewCertificates({
-  walletAddress: propWalletAddress,
+  params,
 }: {
-  walletAddress?: string;
+  params: { userId: string };
 }) {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [certificates, setCertificates] = useState<Certificate[]>([]);
@@ -30,11 +29,12 @@ export default function ViewCertificates({
 
   const certificatesPerPage = 15;
 
-  // Retrieve Wallet Address (from Prop or Local Storage)
+  // Retrieve Wallet Address (Mocked based on userId)
   useEffect(() => {
+    // Simulate fetching wallet address based on userId
     const storedAddress = localStorage.getItem("walletAddress");
-    setWalletAddress(propWalletAddress || storedAddress);
-  }, [propWalletAddress]);
+    setWalletAddress(storedAddress || `mocked-wallet-${params.userId}`);
+  }, [params.userId]);
 
   // Fetch Certificates
   useEffect(() => {
@@ -167,5 +167,3 @@ export default function ViewCertificates({
     </div>
   );
 }
-
-// =========================================================================
