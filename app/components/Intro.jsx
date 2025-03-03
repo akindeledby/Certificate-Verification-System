@@ -2,7 +2,7 @@ import React from "react";
 import Style from "../styles/HomePage.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "./Button";
+import UserRoleCheck from "@/components/UserRoleCheck";
 
 const Intro = () => {
   return (
@@ -20,24 +20,20 @@ const Intro = () => {
           <button
             className={`${Style.intro_button} hover:bg-slate-200 transition ease-in hover:text-slate-700`}
           >
-            <Link href="/pages/howItWorks">Find out more... </Link>
+            <Link href="/howItWorks">Find out more... </Link>
           </button>
         </div>
         <div className="mt-4 mb-2">
-          <button
+          <UserRoleCheck
+            buttonText="Upload a Certificate"
             className={`${Style.intro_button} hover:bg-slate-200 transition ease-in hover:text-slate-700`}
-          >
-            <Link href="/pages/verifyCertificate">Upload a Certificate</Link>
-          </button>
+          />
         </div>
         <div className="mt-4 mb-2">
-          <button
+          <UserRoleCheck
+            buttonText="Search or Veriy a Certificate"
             className={`${Style.intro_button} hover:bg-slate-200 transition ease-in hover:text-slate-700`}
-          >
-            <Link href="/pages/verifyCertificate">
-              Search or Verify a Certificate
-            </Link>
-          </button>
+          />
         </div>
       </div>
 

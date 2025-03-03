@@ -26,9 +26,9 @@
   padding: 0.3rem 1rem;
   display: flex;
   border: 1px solid var(--icons-color);
-  font-size: 1rem;
+  font-size: 0.8rem;
   cursor: pointer;
-  border-radius: 1rem;
+  border-radius: 0.9rem;
   transition: all 0.2s ease-in;
   align-items: center;
   color: var(--shadow-light-color);

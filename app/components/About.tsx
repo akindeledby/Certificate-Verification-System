@@ -25,10 +25,7 @@ const About = () => {
           </p>
           <p className="text-sm md:font-medium md:text-base mt-3">
             Learn more about how this system works:
-            <Link
-              href="/pages/howItWorks"
-              className="text-blue-500 underline ml-1"
-            >
+            <Link href="/howItWorks" className="text-blue-500 underline ml-1">
               Read more
             </Link>
           </p>

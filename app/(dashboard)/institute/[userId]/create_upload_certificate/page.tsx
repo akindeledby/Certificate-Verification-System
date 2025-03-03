@@ -194,20 +194,20 @@
 //     const pageWidth = doc.internal.pageSize.getWidth();
 //     const pageHeight = doc.internal.pageSize.getHeight();
 
-//     doc.setDrawColor(0, 0, 255);
-//     doc.setLineWidth(3);
-//     doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
+// doc.setDrawColor(0, 0, 255);
+// doc.setLineWidth(3);
+// doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
 
-//     if (logo) {
-//       doc.addImage(logo, "PNG", (pageWidth - 35) / 2, 7, 35, 35);
-//     }
+// if (logo) {
+//   doc.addImage(logo, "PNG", (pageWidth - 35) / 2, 7, 35, 35);
+// }
 
 //     doc.setFontSize(30);
 //     doc.text(organization, 150, 55, { align: "center" });
 //     doc.setFontSize(20);
 //     doc.text("Certificate of Completion", 150, 75, { align: "center" });
-//     doc.setFontSize(15);
-//     doc.text("This is to certify that", 150, 90, { align: "center" });
+// doc.setFontSize(15);
+// doc.text("This is to certify that", 150, 90, { align: "center" });
 //     doc.setFontSize(25);
 //     doc.text(candidateName, 150, 105, { align: "center" });
 //     doc.setFontSize(14);
@@ -451,6 +451,8 @@ const CertificateManager = () => {
     }
 
     try {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
@@ -460,7 +462,11 @@ const CertificateManager = () => {
         ipfsHash,
         candidateName
       );
+
+      console.log("Transaction Sent:", tx);
+
       await tx.wait();
+      console.log("Transaction Mined:", tx);
 
       return true;
     } catch (err) {
@@ -580,6 +586,15 @@ const CertificateManager = () => {
       format: "a4",
     });
     const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    doc.setDrawColor(0, 0, 255);
+    doc.setLineWidth(3);
+    doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
+
+    if (logo) {
+      doc.addImage(logo, "PNG", (pageWidth - 35) / 2, 7, 35, 35);
+    }
 
     doc.setFontSize(30);
     doc.text(organization, pageWidth / 2, 55, { align: "center" });
@@ -587,12 +602,30 @@ const CertificateManager = () => {
     doc.text("Certificate of Completion", pageWidth / 2, 75, {
       align: "center",
     });
+    doc.setFontSize(15);
+    doc.text("This is to certify that", 150, 90, { align: "center" });
     doc.setFontSize(25);
     doc.text(candidateName, pageWidth / 2, 105, { align: "center" });
+    doc.setFontSize(5);
+    doc.text(
+      "_____________________________________________________________________",
+      pageWidth / 2,
+      110,
+      { align: "center" }
+    );
+    doc.setFontSize(14);
+    doc.text(`Has successfully completed the course in`, 150, 125, {
+      align: "center",
+    });
     doc.setFontSize(18);
-    doc.text(course, pageWidth / 2, 130, { align: "center" });
+    doc.text(course, pageWidth / 2, 135, { align: "center" });
+    doc.setFontSize(13);
+    doc.text("Issued on this day:", 150, 150, { align: "center" });
+    doc.setFontSize(10);
+    doc.text(dateIssued, 150, 155, { align: "center" });
     doc.setFontSize(12);
-    doc.text(`Certificate ID: ${certificateId}`, pageWidth - 50, 190);
+    doc.text(`Certificate ID: ${certificateId}`, 230, 190);
+    doc.text("Signed by: _____________________", 20, 190);
 
     doc.save("certificate.pdf");
     setLoading(false);
@@ -706,7 +739,7 @@ const CertificateManager = () => {
                 </label>
                 <input
                   type="file"
-                  accept="image/png, image/jpeg"
+                  accept=".jpg,.jpeg,.png"
                   onChange={handleLogoUpload}
                   className="w-full p-2 border rounded"
                 />
