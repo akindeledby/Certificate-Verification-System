@@ -1,17 +1,21 @@
-import { NextResponse } from "next/server";
-import { db } from "@/lib/db"; // Ensure this connects to Prisma
+import { NextRequest, NextResponse } from "next/server";
+import { db } from "@/lib/db";
 
-export async function GET(req: Request) {
+export const dynamic = "force-dynamic"; // ✅ Ensures server-side execution
+
+export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
+    // Use Next.js optimized method to get query parameters
+    const userId = req.nextUrl.searchParams.get("userId");
 
     if (!userId) {
       return NextResponse.json(
-        { message: "User ID is required" },
+        { error: "User ID is required" },
         { status: 400 }
       );
     }
+
+    console.log("🔍 Fetching user data for ID:", userId);
 
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
@@ -27,14 +31,16 @@ export async function GET(req: Request) {
     });
 
     if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json(user);
+    console.log("✅ User data retrieved:", user);
+
+    return NextResponse.json({ user });
   } catch (error) {
-    console.error("Error fetching user data:", error);
+    console.error("🚨 Error fetching user data:", error);
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }

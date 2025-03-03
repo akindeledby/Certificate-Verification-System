@@ -2,8 +2,8 @@
 
 import React from "react";
 
-const VerifierSettings = () => {
+const InstituteSettings = () => {
   return <div>Your settings is coming soon!</div>;
 };
 
-export default VerifierSettings;
+export default InstituteSettings;

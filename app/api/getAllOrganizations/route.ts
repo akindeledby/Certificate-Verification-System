@@ -1,14 +1,21 @@
-import { NextResponse } from "next/server";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 
-export async function GET(req: Request) {
+// Ensure this API route is always treated as dynamic
+export const dynamic = "force-dynamic";
+
+export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = req.nextUrl;
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "15", 10);
     const searchQuery = searchParams.get("search") || "";
     const skip = (page - 1) * limit;
+
+    console.log(
+      `📦 Fetching organizations - Page: ${page}, Limit: ${limit}, Search: ${searchQuery}`
+    );
 
     // Filtering condition for organizations with search functionality
     const filterCondition: Prisma.UserWhereInput = {
@@ -35,12 +42,13 @@ export async function GET(req: Request) {
     const totalOrganizations = await db.user.count({ where: filterCondition });
     const totalPages = Math.ceil(totalOrganizations / limit);
 
+    console.log(`✅ Found ${organizations.length} organizations`);
     return NextResponse.json(
       { organizations, totalPages, currentPage: page },
       { status: 200 }
     );
   } catch (error) {
-    console.error("❌ Error fetching organizations:", error);
+    console.error("🚨 Error fetching organizations:", error);
     return NextResponse.json(
       { message: "Failed to fetch organizations. Please try again later." },
       { status: 500 }

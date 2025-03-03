@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
+// Ensure this API route is always treated as dynamic
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -23,7 +26,7 @@ export async function GET(request: Request) {
     });
 
     // Prepare search conditions
-    const whereCondition: any = {};
+    const whereCondition: Record<string, any> = {};
     if (certificateId) whereCondition.certificateId = certificateId;
     if (candidateName) {
       whereCondition.candidateName = {
@@ -51,7 +54,6 @@ export async function GET(request: Request) {
     }
 
     console.log("✅ Certificate found:", certificate);
-
     return NextResponse.json(certificate);
   } catch (error) {
     console.error("🚨 Error fetching certificate:", error);

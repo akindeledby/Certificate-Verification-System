@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
 import { subDays, format } from "date-fns";
+import { db } from "@/lib/db";
+
+export const dynamic = "force-dynamic"; // ✅ Ensures dynamic route handling
 
 export async function GET(req: NextRequest) {
   try {
-    // Extract wallet address from query params
-    const { searchParams } = new URL(req.url);
-    const walletAddress = searchParams.get("walletAddress");
+    // Extract wallet address from query parameters
+    const walletAddress = req.nextUrl.searchParams.get("walletAddress");
 
     if (!walletAddress) {
       return NextResponse.json(
@@ -17,32 +18,34 @@ export async function GET(req: NextRequest) {
 
     const normalizedWallet = walletAddress.toLowerCase();
 
-    // Get data for the last 7 days
+    // Generate last 7 days' dates
     const days = Array.from({ length: 7 }, (_, i) =>
       format(subDays(new Date(), i), "yyyy-MM-dd")
     ).reverse();
 
-    const dailyUploads = await db.certificate.groupBy({
-      by: ["createdAt"],
-      _count: { createdAt: true },
+    // Fetch daily upload trends
+    const dailyUploads = await db.certificate.findMany({
       where: {
         issuedBy: normalizedWallet,
         createdAt: { gte: subDays(new Date(), 7) },
       },
+      select: {
+        createdAt: true,
+      },
       orderBy: { createdAt: "asc" },
     });
 
+    // Process data into daily trend format
     const trendData = days.map((day) => ({
       date: day,
-      count:
-        dailyUploads.find(
-          (d) => format(new Date(d.createdAt), "yyyy-MM-dd") === day
-        )?._count.createdAt || 0,
+      count: dailyUploads.filter(
+        (d) => format(new Date(d.createdAt), "yyyy-MM-dd") === day
+      ).length,
     }));
 
-    return NextResponse.json(trendData);
+    return NextResponse.json({ trendData });
   } catch (error) {
-    console.error("Error fetching daily trend:", error);
+    console.error("❌ Error fetching daily trend:", error);
     return NextResponse.json(
       { error: "Failed to fetch daily trend" },
       { status: 500 }
