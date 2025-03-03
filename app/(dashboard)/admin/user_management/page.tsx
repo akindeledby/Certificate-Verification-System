@@ -36,16 +36,15 @@ export default function UsersByRole() {
 
       try {
         const response = await fetch("/api/getUsersByRole");
-        const data = await response.json();
+        const data: { [key: string]: User[] } = await response.json();
 
         if (response.ok) {
-          // Initialize each user with an "isEnabled" state (default: true)
           const updatedUsers = Object.fromEntries(
             Object.entries(data).map(([role, roleUsers]) => [
               role,
-              roleUsers.map((user: User) => ({
+              roleUsers.map((user) => ({
                 ...user,
-                isEnabled: true, // Default to enabled
+                isEnabled: true,
               })),
             ])
           );
@@ -81,11 +80,14 @@ export default function UsersByRole() {
   const itemsPerPage = 10;
 
   const handleNextPage = (role: string) => {
-    setPageNumbers((prev) => ({ ...prev, [role]: prev[role] + 1 }));
+    setPageNumbers((prev) => ({ ...prev, [role]: (prev[role] || 1) + 1 }));
   };
 
   const handlePrevPage = (role: string) => {
-    setPageNumbers((prev) => ({ ...prev, [role]: prev[role] - 1 }));
+    setPageNumbers((prev) => ({
+      ...prev,
+      [role]: Math.max(1, (prev[role] || 1) - 1),
+    }));
   };
 
   return (
@@ -144,7 +146,6 @@ export default function UsersByRole() {
                     </TableBody>
                   </Table>
 
-                  {/* Pagination Controls */}
                   <div className="flex justify-between mt-4">
                     <Button
                       onClick={() => handlePrevPage(role)}
