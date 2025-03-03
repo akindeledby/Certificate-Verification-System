@@ -23,9 +23,6 @@ const nextConfig = {
   images: {
     domains: ["utfs.io"],
   },
-  env: {
-    NEXT_PUBLIC_BASE_URL: "http://localhost:3000", // Change this for production
-  },
 };
 
 module.exports = nextConfig;
