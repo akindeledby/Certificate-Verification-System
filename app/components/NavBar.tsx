@@ -43,7 +43,7 @@ const NavBar: React.FC = () => {
       {/* Logo and Title */}
       <div className="flex items-center gap-x-2 md:gap-x-10">
         <Image src="/ECRMI_logo.png" alt="logo" height={100} width={100} />
-        <h2 className="text-sm md:text-3xl font-medium">
+        <h2 className="text-sm md:text-4xl font-medium">
           Blockchain-Based Certificate Management <br />
           and Verification System.
         </h2>
