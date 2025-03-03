@@ -1,65 +1,41 @@
-"use client";
-
 import React from "react";
-import Image from "next/image";
+import styles from "../styles/HomePage.module.css"; // Fixed import
 import Link from "next/link";
-import Button from "./Button";
-import Style from "../styles/HomePage.module.css";
 
-const Intro: React.FC = () => {
+const About = () => {
   return (
-    <div className="w-90 flex flex-col gap-1 p-10 border-b-2 border-t-2 border-t-amber-800 border-b-amber-800 md:flex-row md:px-10 md:mt-2 md:pt-2">
-      <div className="md:gap-x-8">
-        <h1 className="font-medium text-4xl md:font-bold md:text-7xl">
-          Search, Verify, and Authenticate.
-        </h1>
-        <p className="text-sm md:font-medium md:text-base mt-3">
-          Verify the genuineness of academic certificates or credentials using
-          the power of Blockchain technology. <br />
-          Choosing unqualified candidates can ruin an organization&apos;s
-          reputation.
-        </p>
-
-        {/* Buttons Section */}
-        <div className="mt-4 space-y-3">
-          <Link href="/pages/howItWorks">
-            <button
-              className={`${Style.intro_button} hover:bg-slate-200 transition ease-in hover:text-slate-700`}
-            >
-              Find out more...
-            </button>
-          </Link>
-
-          <Link href="/pages/verifyCertificate">
-            <button
-              className={`${Style.intro_button} hover:bg-slate-200 transition ease-in hover:text-slate-700`}
-            >
-              Upload a Certificate
-            </button>
-          </Link>
-
-          <Link href="/pages/verifyCertificate">
-            <button
-              className={`${Style.intro_button} hover:bg-slate-200 transition ease-in hover:text-slate-700`}
-            >
-              Search or Verify a Certificate
-            </button>
-          </Link>
+    <div className={styles.about_box}>
+      <div className="w-full p-4">
+        <div className={styles.about}>
+          <h3>About the System:</h3>
         </div>
-      </div>
-
-      {/* Image Section */}
-      <div className={Style.intro_image_1}>
-        <Image
-          src="/Issue_Process.png"
-          alt="Issuing Process"
-          height={450}
-          width={600}
-          priority
-        />
+        <div className={styles.about_info}>
+          <p className="text-sm md:font-medium md:text-base mt-3">
+            Counterfeit academic certificates have been a longstanding issue in
+            the academic community. Certificate Verification is the process of
+            verifying a certificate issued by an institution and ensuring that
+            it is genuine and authentic.
+          </p>
+          <p className="text-sm md:font-medium md:text-base mt-3">
+            This system uses Blockchain technology to store and verify
+            certificates. Prospective employers and organizations can use the
+            system to verify the authenticity of any certificate issued by our
+            institution. Blockchain is a decentralized and distributed
+            technology that brings significant benefits to the education sector.
+          </p>
+          <p className="text-sm md:font-medium md:text-base mt-3">
+            Learn more about how this system works:
+            <Link
+              href="/pages/howItWorks"
+              className="text-blue-500 underline ml-1"
+            >
+              Read more
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Intro;
+export default About;
