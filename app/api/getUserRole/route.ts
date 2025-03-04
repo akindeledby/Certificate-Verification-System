@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "@/lib/db"; // Ensure this is correctly set up
 
-export const runtime = "nodejs"; // Ensures Prisma runs in the correct environment
-export const dynamic = "force-dynamic"; // Fixes Next.js static rendering error
+// ✅ Ensure this API is always dynamic
+export const dynamic = "force-dynamic"; // Prevents static rendering issues
+export const fetchCache = "force-no-store"; // Disables caching
 
 export async function GET() {
   try {
