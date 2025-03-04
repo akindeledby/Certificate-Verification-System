@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "@/lib/db"; // Ensure this is correctly set up
 
-export const runtime = "nodejs"; // Prisma requires Node.js environment
+export const runtime = "nodejs"; // Ensures Prisma runs in the correct environment
+export const dynamic = "force-dynamic"; // Fixes Next.js static rendering error
 
 export async function GET() {
   try {
@@ -10,10 +11,10 @@ export async function GET() {
     const user = await currentUser();
 
     if (!user) {
-      return new NextResponse(JSON.stringify({ error: "User not signed in" }), {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      });
+      return NextResponse.json(
+        { error: "User not signed in" },
+        { status: 401 }
+      );
     }
 
     // Fetch user role from the database
@@ -23,24 +24,18 @@ export async function GET() {
     });
 
     if (!userData?.role) {
-      return new NextResponse(
-        JSON.stringify({ error: "Unauthorized access" }),
-        {
-          status: 403,
-          headers: { "Content-Type": "application/json" },
-        }
+      return NextResponse.json(
+        { error: "Unauthorized access" },
+        { status: 403 }
       );
     }
 
-    return new NextResponse(JSON.stringify({ role: userData.role }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return NextResponse.json({ role: userData.role }, { status: 200 });
   } catch (error) {
     console.error("Error fetching user role:", error);
-    return new NextResponse(
-      JSON.stringify({ error: "Internal server error" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
     );
   }
 }
